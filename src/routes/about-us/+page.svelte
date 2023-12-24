@@ -6,7 +6,7 @@
 	onMount(() => {
 		// client-side guard, for server-side guard, refer hooks.server.ts
 		if (!$page?.data?.session?.user?.access_token) {
-			goto('/hello');
+			goto('/');
 		}
 	});
 </script>
@@ -21,7 +21,7 @@
 
 	<pre>pnpm create svelte@latest</pre>
 
-	<p>This is a protected page. Back to <a href="/hello">Home Page</a></p>
+	<p>This is a protected page. Back to <a href="/">Home Page</a></p>
 </div>
 
 <style lang="scss">

@@ -1,11 +1,12 @@
 import { dev } from '$app/environment';
-import { SvelteKitAuth } from '@auth/sveltekit';
-
 import { isEmpty } from 'lodash-es';
+import { SvelteKitAuth, type SvelteKitAuthConfig } from '@auth/sveltekit';
 
-export async function getAuthConfig(args: any): Promise<Response> {
+export async function getAuthConfig(args: any): Promise<SvelteKitAuthConfig | Response> {
 	const useSecureCookies = !dev;
-	return SvelteKitAuth({
+	const returnConfigOnly = args.render === 'config';
+
+	const config: SvelteKitAuthConfig = {
 		providers: [
 			{
 				id: 'auth0',
@@ -20,7 +21,8 @@ export async function getAuthConfig(args: any): Promise<Response> {
 		debug: true,
 		secret: import.meta.env.VITE_VERCEL_SECRET,
 		session: {
-			maxAge: 3600
+			maxAge: 3600,
+			strategy: 'jwt'
 		},
 		trustHost: true,
 		cookies: {
@@ -52,7 +54,15 @@ export async function getAuthConfig(args: any): Promise<Response> {
 					token = { ...token, ...(profile as any) };
 				}
 
-				// ToDo: Logic to update session-token-cookie
+				const shouldUpdateToken = args.event.url.searchParams.get('query') === 'update-user-data';
+				if (shouldUpdateToken) {
+					console.log('token before update: ', token);
+					token = {
+						...token,
+						library: 'SvelteKitAuth'
+					};
+					console.log('token after update: ', token);
+				}
 
 				return token;
 			},
@@ -74,9 +84,8 @@ export async function getAuthConfig(args: any): Promise<Response> {
 					console.log('ERROR via HOOKS: ', e?.message);
 				}
 			}
-		},
-		events: {
-			async signOut(message: any) {}
 		}
-	})(args);
+	};
+
+	return returnConfigOnly ? config : SvelteKitAuth(config)(args);
 }

@@ -1,6 +1,26 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { signIn, signOut } from '@auth/sveltekit/client';
+
+	function logout() {
+		signOut();
+	}
+
+	async function updateUserData() {
+		await fetch('/api/update-user-data?query=update-user-data', {
+			method: 'POST'
+		});
+	}
+
+	async function updateUserDataV2() {
+		await fetch('/api/update-user-data-v2', {
+			method: 'POST'
+		});
+	}
+
+	function printUserData() {
+		console.log('User Data: ', $page.data.session?.user);
+	}
 </script>
 
 <div class="content">
@@ -8,7 +28,7 @@
 
 	<p>
 		This page deals with client side sign-in and sign-out. For server-side, redirect to <a
-			href="/hello/login">/login</a
+			href="/login">/login</a
 		>.
 	</p>
 
@@ -18,9 +38,14 @@
 				<span>Signed in as</span>
 				<strong>Email: {$page.data.session.user.email}</strong>
 				<strong>Name: {$page.data.session.user.name}</strong>
-				<button on:click={() => signOut()} class="button">Sign out</button>
+				<div class="buttons">
+					<button on:click={logout} class="button">Sign out</button>
+					<button on:click={updateUserData} class="button">Update user data v1</button>
+					<button on:click={updateUserDataV2} class="button">Update user data v2</button>
+					<button on:click={printUserData} class="button">Print user data</button>
+				</div>
 				<p>
-					Since you are logged-in, you can access <a href="/hello/about-us">protected routes</a>
+					Since you are logged-in, you can access <a href="/about-us">protected routes</a>
 				</p>
 			</div>
 		{:else}
@@ -31,7 +56,7 @@
 				<span>Sign In with Auth0</span>
 			</button>
 			<p>
-				Since you are logged-out, you cannot access <a href="/hello/about-us">protected routes</a>
+				Since you are logged-out, you cannot access <a href="/about-us">protected routes</a>
 			</p>
 		{/if}
 	</p>
@@ -51,6 +76,17 @@
 			flex-direction: column;
 			align-items: center;
 			line-height: 2rem;
+
+			.buttons {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				margin: 1rem auto;
+
+				button {
+					margin: 1rem;
+				}
+			}
 		}
 	}
 </style>

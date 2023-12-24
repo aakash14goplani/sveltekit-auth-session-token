@@ -1,12 +1,15 @@
-import { redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-import { getAuthConfig } from './lib/server/svelte-kit-auth-config';
+import { getAuthConfig } from '$lib/server/svelte-kit-auth-config';
+import { redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
 
 const userSessionInterceptor = (async ({ event, resolve }) => {
 	const session = await event.locals.getSession();
 	const isSessionTimedOut = new Date(session?.expires || '') <= new Date();
 	const isUserSessionUndefined = !session?.user;
-	const isUrlExempted = event.url.pathname.includes('/logout') || event.url.pathname === '/';
+	const isUrlExempted =
+		event.url.pathname.includes('/logout') ||
+		event.url.pathname.includes('/api') ||
+		event.url.pathname === '/';
 
 	if (isSessionTimedOut || isUserSessionUndefined) {
 		if (!isUrlExempted) {
@@ -24,4 +27,4 @@ export const handleError: HandleServerError = ({ error }) => {
 	return { message };
 };
 
-export const handle = sequence(getAuthConfig, userSessionInterceptor);
+export const handle = sequence(getAuthConfig as Handle, userSessionInterceptor);
