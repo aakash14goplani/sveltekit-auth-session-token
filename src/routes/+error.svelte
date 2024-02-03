@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import { onDestroy, onMount } from 'svelte';
 
 	let timeoutId: any;
 
 	onMount(() => {
-		timeoutId = setTimeout(() => goto('/'), 1000);
+		timeoutId = setTimeout(() => {
+			console.log('route does not exist, redirecting to home page');
+			goto(base);
+		}, 1000);
 	});
 
 	onDestroy(() => {

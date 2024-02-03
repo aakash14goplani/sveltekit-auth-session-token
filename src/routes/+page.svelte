@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 
@@ -7,13 +8,7 @@
 	}
 
 	async function updateUserData() {
-		await fetch('/api/update-user-data?query=update-user-data', {
-			method: 'POST'
-		});
-	}
-
-	async function updateUserDataV2() {
-		await fetch('/api/update-user-data-v2', {
+		await fetch(base + '/api/update-user-data?query=update-user-data', {
 			method: 'POST'
 		});
 	}
@@ -28,7 +23,7 @@
 
 	<p>
 		This page deals with client side sign-in and sign-out. For server-side, redirect to <a
-			href="/login">/login</a
+			href={base + '/login'}>/login</a
 		>.
 	</p>
 
@@ -41,11 +36,10 @@
 				<div class="buttons">
 					<button on:click={logout} class="button">Sign out</button>
 					<button on:click={updateUserData} class="button">Update user data v1</button>
-					<button on:click={updateUserDataV2} class="button">Update user data v2</button>
 					<button on:click={printUserData} class="button">Print user data</button>
 				</div>
 				<p>
-					Since you are logged-in, you can access <a href="/about-us">protected routes</a>
+					Since you are logged-in, you can access <a href={base + '/about-us'}>protected routes</a>
 				</p>
 			</div>
 		{:else}
@@ -56,7 +50,8 @@
 				<span>Sign In with Auth0</span>
 			</button>
 			<p>
-				Since you are logged-out, you cannot access <a href="/about-us">protected routes</a>
+				Since you are logged-out, you cannot access <a href={base + '/about-us'}>protected routes</a
+				>
 			</p>
 		{/if}
 	</p>

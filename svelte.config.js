@@ -5,6 +5,10 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
 	preprocess: vitePreprocess(),
 	kit: {
+		paths: {
+			base: '/aakash',
+			relative: true
+		},
 		adapter: adapter(),
 		alias: {
 			$src: './src',

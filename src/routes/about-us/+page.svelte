@@ -2,11 +2,12 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 
 	onMount(() => {
 		// client-side guard, for server-side guard, refer hooks.server.ts
 		if (!$page?.data?.session?.user?.access_token) {
-			goto('/');
+			goto(base);
 		}
 	});
 </script>
@@ -21,7 +22,7 @@
 
 	<pre>pnpm create svelte@latest</pre>
 
-	<p>This is a protected page. Back to <a href="/">Home Page</a></p>
+	<p>This is a protected page. Back to <a href={base}>Home Page</a></p>
 </div>
 
 <style lang="scss">

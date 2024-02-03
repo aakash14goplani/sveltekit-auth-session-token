@@ -2,11 +2,11 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 export const POST = (async ({ fetch, locals }) => {
 	try {
-		const session = await locals?.getSession();
+		const session = await locals?.auth();
 		const user = session?.user;
 
 		if (user) {
-      await fetch('/auth/session');
+			await fetch('/auth/session');
 			return new Response('User data updated', { status: 200 });
 		}
 

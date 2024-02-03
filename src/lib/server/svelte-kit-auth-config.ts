@@ -59,7 +59,7 @@ export async function getAuthConfig(args: any): Promise<SvelteKitAuthConfig | Re
 					console.log('token before update: ', token);
 					token = {
 						...token,
-						library: 'SvelteKitAuth'
+						library: 'SvelteKitAuth-0.11.0'
 					};
 					console.log('token after update: ', token);
 				}
@@ -69,7 +69,7 @@ export async function getAuthConfig(args: any): Promise<SvelteKitAuthConfig | Re
 			async session({ session, token }) {
 				if (session.user) {
 					if (token?.access_token) {
-						session.user = { ...session.user, ...token };
+						session.user = { ...session.user, ...token } as any;
 					}
 				}
 				return session;
