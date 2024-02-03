@@ -12,14 +12,14 @@ export async function getAuthConfig(args: any): Promise<SvelteKitAuthConfig | Re
 				id: 'auth0',
 				name: 'Auth0',
 				type: 'oidc',
-				clientId: import.meta.env.VITE_CLIENT_ID,
-				clientSecret: import.meta.env.VITE_CLIENT_SECRET,
-				issuer: import.meta.env.VITE_ISSUER,
-				wellKnown: import.meta.env.VITE_WELL_KNOWN
+				clientId: process.env.CLIENT_ID,
+				clientSecret: process.env.CLIENT_SECRET,
+				issuer: process.env.ISSUER,
+				wellKnown: process.env.WELL_KNOWN
 			}
 		],
 		debug: true,
-		secret: import.meta.env.VITE_VERCEL_SECRET,
+		secret: process.env.VERCEL_SECRET,
 		session: {
 			maxAge: 3600,
 			strategy: 'jwt'

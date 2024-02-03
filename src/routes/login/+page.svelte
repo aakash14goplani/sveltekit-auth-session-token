@@ -8,7 +8,7 @@
 
 	<p>
 		This page deals with server side sign-in. As soon as you land on this page, you'll be
-		authenticated. For server-side logout, redirect to <a href={base + '/logout'}>/logout</a>.
+		authenticated.
 	</p>
 
 	<p>
@@ -17,11 +17,13 @@
 				<span>Signed in as</span>
 				<strong>Email: {$page.data.session.user.email}</strong>
 				<strong>Name: {$page.data.session.user.name}</strong>
+				<p>For server-side logout, redirect to <a href={base + '/logout'}>/logout</a></p>
 			</div>
+		{:else}
+			<p>YOU'RE STILL NOT LOGGED IN!</p>
+			<p>Go to <a href={base}>home page</a></p>
 		{/if}
 	</p>
-
-	<p>next-auth.session-token cookie is getting created on login!</p>
 </div>
 
 <style lang="scss">

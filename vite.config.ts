@@ -1,9 +1,15 @@
+import dotenv from 'dotenv';
+import { defineConfig, loadEnv } from 'vite';
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
 
-export default defineConfig({
-	plugins: [sveltekit()],
-	build: {
-		sourcemap: true
-	}
+dotenv.config();
+
+export default defineConfig(({ mode }) => {
+	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+	return {
+		plugins: [sveltekit()],
+		build: {
+			sourcemap: true
+		}
+	};
 });
