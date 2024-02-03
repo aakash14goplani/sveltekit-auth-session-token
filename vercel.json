@@ -2,7 +2,7 @@
 	"redirects": [
 		{
 			"source": "/",
-			"destination": "/aakash",
+			"destination": "/hello",
 			"statusCode": 302
 		}
 	]

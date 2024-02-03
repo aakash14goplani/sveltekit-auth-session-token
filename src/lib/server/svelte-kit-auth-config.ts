@@ -20,6 +20,7 @@ export async function getAuthConfig(args: any): Promise<SvelteKitAuthConfig | Re
 		],
 		debug: true,
 		secret: process.env.VERCEL_SECRET,
+		basePath: '/hello/auth',
 		session: {
 			maxAge: 3600,
 			strategy: 'jwt'

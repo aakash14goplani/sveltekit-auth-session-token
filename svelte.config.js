@@ -6,7 +6,7 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		paths: {
-			base: '/aakash',
+			base: '/hello',
 			relative: true
 		},
 		adapter: adapter(),

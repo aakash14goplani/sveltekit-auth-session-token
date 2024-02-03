@@ -17,7 +17,7 @@ export const load = (async ({ fetch, locals, url: _url }) => {
 			const formData = new URLSearchParams();
 			formData.append('redirect', 'true');
 			formData.append('csrfToken', csrfToken);
-			formData.append('callbackUrl', `${_url.origin}/${base}/login`);
+			formData.append('callbackUrl', `${_url.origin + base}/login`);
 
 			const signInRequest = await fetch(base + '/auth/signin/auth0? ' + params.toString(), {
 				method: 'POST',

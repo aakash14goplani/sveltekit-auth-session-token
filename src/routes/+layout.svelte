@@ -6,7 +6,7 @@
 		if (to?.url) {
 			const targetUrl = to.url;
 			const targetUrlPath = targetUrl.pathname;
-			if (!targetUrlPath.startsWith('/aakash')) {
+			if (!targetUrlPath.startsWith('/hello')) {
 				cancel();
 				const newUrl = targetUrl.origin + base + targetUrlPath;
 				goto(newUrl);
