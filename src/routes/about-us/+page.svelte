@@ -6,6 +6,7 @@
 
 	onMount(() => {
 		// client-side guard, for server-side guard, refer hooks.server.ts
+		console.log('User Data:', $page.data.session);
 		if (!$page?.data?.session?.user?.access_token) {
 			goto(base);
 		}

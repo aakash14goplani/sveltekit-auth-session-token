@@ -7,7 +7,6 @@
 
 	onMount(() => {
 		timeoutId = setTimeout(() => {
-			console.log('route does not exist, redirecting to home page');
 			goto(base);
 		}, 1000);
 	});

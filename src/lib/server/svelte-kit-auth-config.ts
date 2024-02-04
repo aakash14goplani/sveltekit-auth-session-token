@@ -57,12 +57,12 @@ export async function getAuthConfig(args: any): Promise<SvelteKitAuthConfig | Re
 
 				const shouldUpdateToken = args.event.url.searchParams.get('query') === 'update-user-data';
 				if (shouldUpdateToken) {
-					console.log('token before update: ', token);
+					console.log('token before update [library]: ', token?.library);
 					token = {
 						...token,
-						library: 'SvelteKitAuth-0.11.0'
+						library: 'SvelteKitAuth: v0.11.1'
 					};
-					console.log('token after update: ', token);
+					console.log('token after update [library]: ', token?.library);
 				}
 
 				return token;
