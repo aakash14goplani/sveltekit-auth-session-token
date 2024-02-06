@@ -1,12 +1,10 @@
-import { dev } from '$app/environment';
 import { isEmpty } from 'lodash-es';
-import { SvelteKitAuth, type SvelteKitAuthConfig } from '@auth/sveltekit';
+import { dev } from '$app/environment';
+import { SvelteKitAuth } from '@auth/sveltekit';
 
-export async function getAuthConfig(args: any): Promise<SvelteKitAuthConfig | Response> {
+export const { handle: getAuthConfig } = SvelteKitAuth(async (event) => {
 	const useSecureCookies = !dev;
-	const returnConfigOnly = args.render === 'config';
-
-	const config: SvelteKitAuthConfig = {
+	return {
 		providers: [
 			{
 				id: 'auth0',
@@ -55,7 +53,7 @@ export async function getAuthConfig(args: any): Promise<SvelteKitAuthConfig | Re
 					token = { ...token, ...(profile as any) };
 				}
 
-				const shouldUpdateToken = args.event.url.searchParams.get('query') === 'update-user-data';
+				const shouldUpdateToken = event.url.searchParams.get('query') === 'update-user-data';
 				if (shouldUpdateToken) {
 					console.log('token before update [library]: ', token?.library);
 					token = {
@@ -86,7 +84,5 @@ export async function getAuthConfig(args: any): Promise<SvelteKitAuthConfig | Re
 				}
 			}
 		}
-	};
-
-	return returnConfigOnly ? config : SvelteKitAuth(config)(args);
-}
+	}
+});

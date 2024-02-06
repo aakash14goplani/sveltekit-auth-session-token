@@ -31,4 +31,4 @@ export const handleError: HandleServerError = ({ error }) => {
 	return { message };
 };
 
-export const handle = sequence(getAuthConfig as Handle, userSessionInterceptor);
+export const handle = sequence(getAuthConfig, userSessionInterceptor);
